@@ -61,22 +61,22 @@ public class MessageParserImpl implements MessageParser {
                 AIRequest request = new AIRequest(text);
                 Gson gson = new Gson();
 
-                if (!user.getContexts().equals("null")) {
+                if (user.getContexts()!=null && !user.getContexts().equals("null")) {
                     List<AIContext> aiContexts = Arrays.asList(gson.fromJson(user.getContexts(), AIContext[].class));
                     for (AIContext aiContext : aiContexts) {
                         request.addContext(aiContext);
                     }
                 }
                 AIResponse response = dataService.request(request);
-
                 user.setContexts(gson.toJson(response.getResult().getContexts()));
-
                 messageSenderService.sendMessaging(new Messaging(response.getResult().getFulfillment().getSpeech(), user.getId()));
 
                 if(user.getContexts().equals("[]")) {
                     intentParser.parseIntent(response.getResult(),user);
                 }
+
                 userService.updateUser(user);
+
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
