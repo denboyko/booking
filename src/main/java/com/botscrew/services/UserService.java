@@ -8,7 +8,5 @@ import com.botscrew.models.entities.User;
  */
 public interface UserService {
     User getUser(Long id);
-    void changeStatus(Long id, String status);
     void updateUser(User user);
-
 }

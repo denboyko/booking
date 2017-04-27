@@ -70,7 +70,7 @@ public class MessageSenderServiceImpl implements MessageSenderService {
             element.setButtons(new ArrayList<>());
             element.getButtons().add(new Button(ButtonType.postback.name(),ResourceBundle.getBundle("messages", new Locale(userService.getUser(recipient).getLocale())).getString("button.delete"), PayloadType.DELETE+"?"+room.getId()));
             element.setTitle(room.getLocation());
-            element.setSubtitle("For " + room.getRoomSize()+ "people, \n" + room.getDate() + ",\n for " + room.getNights()+ " nights");
+            element.setSubtitle("For " + room.getRoomSize()+ " people, \n" + room.getDate() + ",\n for " + room.getNights()+ " nights");
             payload.getElements().add(element);
         }
         if(payload.getElements().size()>10){

@@ -29,17 +29,19 @@ public class ApiAiWebhookParserImpl implements ApiAiWebhookParser {
     @Override
     public void parseApiAiWebhook(Webhook webhook) {
         User user = null;
-        switch(Source.valueOf(webhook.getOriginalRequest().getSource())){
-            case facebook:{
-                user = userService.getUser(webhook.getOriginalRequest().getData().getSender().getId());
-                break;
-            }
-            case slack:{
-                //future feature
-                break;
-            }
+        if(webhook.getOriginalRequest()!=null) {
+            switch (Source.valueOf(webhook.getOriginalRequest().getSource())) {
+                case facebook: {
+                    user = userService.getUser(webhook.getOriginalRequest().getData().getSender().getId());
+                    break;
+                }
+                case slack: {
+                    //future feature
+                    break;
+                }
 
+            }
+            intentParser.parseIntent(webhook.getResult(), user);
         }
-        intentParser.parseIntent(webhook.getResult(),user);
     }
 }

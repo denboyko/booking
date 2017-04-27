@@ -39,7 +39,7 @@ public class MessageParserImpl implements MessageParser {
 
 
     @Autowired
-    private QuickReplyParserService quickReplyParserService;
+    private QuickReplyParser quickReplyParser;
 
     @Value("${api.ai.client.access.token}")
     private String API_AI_CLIENT_ACCESS_TOKEN;
@@ -48,7 +48,7 @@ public class MessageParserImpl implements MessageParser {
     public void parseMessage(Messaging messaging, Long sessionId) {
 
         if (messaging.getMessage().getQuickReply() != null) {
-            quickReplyParserService.parseQuickReply(messaging);
+            quickReplyParser.parseQuickReply(messaging);
             return;
         }
         String text = messaging.getMessage().getText();
@@ -61,7 +61,7 @@ public class MessageParserImpl implements MessageParser {
                 AIRequest request = new AIRequest(text);
                 Gson gson = new Gson();
 
-                if (user.getContexts() != null) {
+                if (!user.getContexts().equals("null")) {
                     List<AIContext> aiContexts = Arrays.asList(gson.fromJson(user.getContexts(), AIContext[].class));
                     for (AIContext aiContext : aiContexts) {
                         request.addContext(aiContext);
