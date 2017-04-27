@@ -2,7 +2,6 @@ package com.botscrew.models;
 
 import ai.api.model.AIResponse;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * @author Den Boyko
