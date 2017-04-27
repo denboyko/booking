@@ -1,9 +1,5 @@
 package com.botscrew.models.entities;
 
-import ai.api.model.AIOutputContext;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -33,7 +29,7 @@ public class User {
     private String gender;
 
     @Lob
-    private String status;
+    private String contexts;
 
     private String sessionId;
 
@@ -41,13 +37,10 @@ public class User {
     @OneToMany(mappedBy = "owner")
     private List<Room> rooms;
 
-    public enum Statuses {
-
-    }
     public User() {
     }
 
-    public User(Long id, String firstName, String lastName, String profilePic, String locale, Integer timezone, String gender, String status) {
+    public User(Long id, String firstName, String lastName, String profilePic, String locale, Integer timezone, String gender, String contexts) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -55,7 +48,7 @@ public class User {
         this.locale = locale;
         this.timezone = timezone;
         this.gender = gender;
-        this.status = status;
+        this.contexts = contexts;
     }
 
     public User(Long id, String firstName, String lastName, String profilePic, String locale, Integer timezone, String gender) {
@@ -140,12 +133,12 @@ public class User {
         this.gender = gender;
     }
 
-    public String getStatus() {
-        return status;
+    public String getContexts() {
+        return contexts;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setContexts(String contexts) {
+        this.contexts = contexts;
     }
 
 }

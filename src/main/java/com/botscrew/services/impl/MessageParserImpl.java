@@ -5,14 +5,10 @@ import ai.api.AIDataService;
 import ai.api.model.AIContext;
 import ai.api.model.AIRequest;
 import ai.api.model.AIResponse;
-import com.botscrew.models.apiai.Result;
 import com.botscrew.models.entities.User;
 import com.botscrew.models.messanger.Messaging;
 import com.botscrew.services.*;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,26 +61,22 @@ public class MessageParserImpl implements MessageParser {
                 AIRequest request = new AIRequest(text);
                 Gson gson = new Gson();
 
-                if (user.getStatus() != null) {
-                    List<AIContext> aiContexts = Arrays.asList(gson.fromJson(user.getStatus(), AIContext[].class));
+                if (user.getContexts() != null) {
+                    List<AIContext> aiContexts = Arrays.asList(gson.fromJson(user.getContexts(), AIContext[].class));
                     for (AIContext aiContext : aiContexts) {
                         request.addContext(aiContext);
                     }
                 }
-
                 AIResponse response = dataService.request(request);
 
-                if(response.getResult().getContexts()!=null) {
-                    user.setStatus(gson.toJson(response.getResult().getContexts()));
-                } else {
-                    intentParser.parseIntent(response.getResult(),user);
-                }
-
-
-
-                userService.updateUser(user);
+                user.setContexts(gson.toJson(response.getResult().getContexts()));
 
                 messageSenderService.sendMessaging(new Messaging(response.getResult().getFulfillment().getSpeech(), user.getId()));
+
+                if(user.getContexts().equals("[]")) {
+                    intentParser.parseIntent(response.getResult(),user);
+                }
+                userService.updateUser(user);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

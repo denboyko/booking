@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void changeStatus(Long id, String status) {
         User user = userDao.findOne(id);
-        user.setStatus(status);
+        user.setContexts(status);
         userDao.saveAndFlush(user);
     }
 

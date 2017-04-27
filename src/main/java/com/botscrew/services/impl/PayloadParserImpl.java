@@ -2,6 +2,7 @@ package com.botscrew.services.impl;
 
 import com.botscrew.models.enums.messanger.PayloadType;
 import com.botscrew.models.messanger.Messaging;
+import com.botscrew.repositories.RoomDao;
 import com.botscrew.services.MessageSenderService;
 import com.botscrew.services.PayloadParser;
 import com.botscrew.services.UserService;
@@ -19,7 +20,7 @@ public class PayloadParserImpl implements PayloadParser {
     private MessageSenderService messageSenderService;
 
     @Autowired
-    private UserService userService;
+    private RoomDao roomDao;
 
 
     @Override
@@ -28,6 +29,14 @@ public class PayloadParserImpl implements PayloadParser {
         switch (PayloadType.valueOf(payload.split("\\?")[0])){
             case GET_STARTED_PAYLOAD:{
                 messageSenderService.sayHello(messaging.getSender().getId());
+                break;
+            }case NEXT_ROOMS:{
+                messageSenderService.sendBookedRooms(messaging.getSender().getId(), Integer.parseInt(payload.split("\\?")[1]));
+                break;
+            }
+            case DELETE:{
+                roomDao.delete(Long.parseLong(payload.split("\\?")[1]));
+                messageSenderService.sendBookedRooms(messaging.getSender().getId(),0);
                 break;
             }
             default:{

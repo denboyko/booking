@@ -6,4 +6,6 @@ package com.botscrew.models.enums.apiai;
  */
 public enum Intent {
     book,
+    welcome,
+    show
 }

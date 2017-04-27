@@ -9,5 +9,6 @@ import com.botscrew.models.messanger.Messaging;
 public interface MessageSenderService {
     void sayHello(Long recipient);
     void sendErrorMessage(Long recipient);
+    void sendBookedRooms(Long recipient, Integer num);
     void sendMessaging(Messaging messaging);
 }
