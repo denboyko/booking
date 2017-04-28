@@ -41,7 +41,7 @@ public class MessageParserImpl implements MessageParser {
     private String API_AI_CLIENT_ACCESS_TOKEN;
 
     @Override
-    public void parseMessage(Messaging messaging, Long sessionId) {
+    public void parseMessage(Messaging messaging, Long sessionId)throws Exception {
 
         if (messaging.getMessage().getQuickReply() != null) {
             quickReplyParser.parseQuickReply(messaging);
@@ -53,7 +53,6 @@ public class MessageParserImpl implements MessageParser {
             AIConfiguration configuration = new AIConfiguration(API_AI_CLIENT_ACCESS_TOKEN);
 
             AIDataService dataService = new AIDataService(configuration);
-            try {
                 AIRequest request = new AIRequest(text);
                 Gson gson = new Gson();
 
@@ -72,10 +71,6 @@ public class MessageParserImpl implements MessageParser {
                 }
 
                 userService.updateUser(user);
-
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
 
         } else
             messageSenderService.sendErrorMessage(messaging.getSender().getId());
