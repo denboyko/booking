@@ -31,9 +31,6 @@ public class User {
     @Lob
     private String contexts;
 
-    private String sessionId;
-
-
     @OneToMany(mappedBy = "owner")
     private List<Room> rooms;
 
@@ -67,14 +64,6 @@ public class User {
 
     public void setRooms(List<Room> rooms) {
         this.rooms = rooms;
-    }
-
-    public String getSessionId() {
-        return sessionId;
-    }
-
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
     }
 
     public Long getId() {

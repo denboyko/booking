@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
     public User getUser(Long id) {
         User user = userDao.findOne(id);
         if(user==null) {
-            String url = FACEBOOK_URL + id + "?access_token=" + PAGE_ACCESS_TOKEN;
+            String url = String.format(FACEBOOK_URL,id)+ PAGE_ACCESS_TOKEN;
             RestTemplate restTemplate = new RestTemplate();
             com.botscrew.models.messanger.User user1 = restTemplate.getForObject(url, com.botscrew.models.messanger.User.class);
             user = new User(user1.getId(),user1.getFirstName(),user1.getLastName(),user1.getProfilePic(),user1.getLocale(),user1.getTimezone(),user1.getGender());

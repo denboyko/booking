@@ -34,9 +34,6 @@ public class IntentParserImpl implements IntentParser {
                 parseShowIntent(user);
                 break;
             }
-            default:{
-
-            }
         }
     }
 
@@ -51,16 +48,6 @@ public class IntentParserImpl implements IntentParser {
                 parseShowIntent(user);
                 break;
             }
-            case welcome:{
-                break;
-            }
-            case fallback:{
-                break;
-            }
-            default:{
-
-            }
-
         }
     }
 

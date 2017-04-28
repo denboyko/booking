@@ -9,8 +9,6 @@ import com.botscrew.models.entities.User;
 import com.botscrew.models.messanger.Messaging;
 import com.botscrew.services.*;
 import com.google.gson.Gson;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -25,8 +23,6 @@ import java.util.List;
 
 @Service
 public class MessageParserImpl implements MessageParser {
-
-    private static Logger logger = LoggerFactory.getLogger(MessageParserImpl.class);
 
     @Autowired
     private MessageSenderService messageSenderService;
